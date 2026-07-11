@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import pandas as pd
-
 df = pd.read_csv("Telco-Customer-Churn.csv")
 shape = df.shape
 data_types = df.dtypes
