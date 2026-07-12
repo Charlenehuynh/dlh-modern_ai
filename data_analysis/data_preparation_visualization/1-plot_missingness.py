@@ -16,19 +16,3 @@ def plot_missingness(df):
 
     plt.tight_layout()
     plt.show()
-
-
-## TEST
-import pandas as pd
-
-data = {
-    "customerID": ["A", "B", "C", "A", "D", "E"],
-    "gender": ["Male", "Female", np.nan, "Male", "Female", "Male"],
-    "Partner": ["Yes", "No", "No", np.nan, "Yes", None],
-    "tenure": [1, 24, 5, 1, 36, np.nan],
-    "TotalCharges": [29.85, 2138.40, np.nan, 29.85, 3803.40, 0],
-    "Churn": ["No", "Yes", np.nan, "No", None, "No"],
-}
-test_df = pd.DataFrame(data)
-# print(test_df)
-plot_missingness(test_df)
