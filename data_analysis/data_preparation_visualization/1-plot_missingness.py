@@ -6,6 +6,7 @@ import numpy as np
 
 
 def plot_missingness(df):
+    """ Visualizes missing values"""
     plt.figure(figsize=(12, 8))
 
     plt.figure(figsize=(12, 8))
