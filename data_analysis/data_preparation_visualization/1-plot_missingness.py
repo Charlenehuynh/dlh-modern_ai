@@ -8,20 +8,19 @@ import numpy as np
 def plot_missingness(df):
     plt.figure(figsize=(12, 8))
 
-    for col_idx, col in enumerate(df.columns):
-        missing_rows = np.where(df[col].isnull())[0]
-        plt.scatter(
-            missing_rows,
-            np.full(len(missing_rows), col_idx),
-            marker="|",
-            s=100,
-            color="black",
-        )
+    plt.figure(figsize=(12, 8))
+
+    df_nul = df.isnull()
+    nul = np.where(df_nul)
+
+    x = nul[0]
+    y = nul[1]
+
+    plt.scatter(x, y, marker="|")
 
     plt.title("Missingness Plot")
-    plt.xlabel("Row Index")
-    plt.yticks(range(len(df.columns)), df.columns)
+    plt.yticks(np.arange(0, len(df.columns.values)), df.columns.values)
+
     plt.tight_layout()
     plt.show()
-
     return None
