@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 def plot_categorical_distributions(df, columns_to_plot=None):
-    """ """
+    """plot distribution"""
     if columns_to_plot is None:
         columns_to_plot = df.select_dtypes(include="object").columns.tolist()
         if "Churn" in columns_to_plot:
