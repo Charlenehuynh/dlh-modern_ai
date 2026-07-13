@@ -19,7 +19,7 @@ def plot_categorical_distributions(df, columns_to_plot=None):
 
     for i, col in enumerate(columns_to_plot):
         counts = df[col].value_counts()
-        axes[i].bar(counts.index, counts.values, color="skyblue")
+        axes[i].bar(counts.index, counts.values)
         axes[i].set_title(col)
         axes[i].tick_params(axis="x", rotation=45)
 
