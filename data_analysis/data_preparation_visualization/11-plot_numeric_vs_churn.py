@@ -18,10 +18,11 @@ def plot_numeric_vs_churn(df, col):
     Returns: None
     """
     plt.figure(figsize=(12, 8))
-    plt.hist(df[df["Churn"] == "No"][col], bins=30, alpha=0.5, label="No")
-    plt.hist(df[df["Churn"] == "Yes"][col], bins=30, alpha=0.5, label="Yes")
-    plt.xlabel(col)
-    plt.ylabel("Frequency")  # Standard for histograms
+    col_no = df[df["Churn"] == "No"][col]
+    col_yes = df[df["Churn"] == "Yes"][col]
+    plt.figure(figsize=(12, 8))
+    plt.hist([col_no, col_yes], bins=30, label=["No", "Yes"])
     plt.title(f"{col} Distribution by Churn")
+    plt.xlabel(col)
     plt.legend(title="Churn")
     plt.show()
