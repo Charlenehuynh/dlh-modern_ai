@@ -7,7 +7,19 @@ from scipy import stats
 
 
 def plot_continuous_distributions(df, columns_to_plot=None):
-    """Plot"""
+    """
+    Left subplot: Histogram with KDE using the following settings:
+
+    bins = 30
+    density = True
+    alpha = 0.7
+    edgecolor = 'black'
+    KDE line color should be red
+    Title format: "<column_name> Histogram + KDE"
+    Right subplot: Box Plot
+
+    Title format: "<column_name> Boxplot"
+    """
     if columns_to_plot is None:
         columns_to_plot = df.select_dtypes(include=["number"]).columns.tolist()
     else:
