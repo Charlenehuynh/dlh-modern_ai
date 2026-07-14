@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-This module contains the function create_features, which engineers new features
-from the Telco Customer Churn dataset.
+This module contains the function create_features.
+It engineers new features using the Telco Customer Churn dataset.
 """
-
 import pandas as pd
 
 
@@ -34,7 +33,7 @@ def create_features(df):
         else:
             df_copy["NumServices"] += (df_copy[col] == "Yes").astype(int)
 
-    # Change the lowest boundary to -1 to safely include 0 tenure values in the "0-12" group
+    # Use -1 as the lower bound to include 0 tenure values in the 0-12 group
     bins = [-1, 12, 24, 48, 60, float("inf")]
     labels = ["0-12", "13-24", "25-48", "49-60", "60+"]
     df_copy["TenureGroup"] = pd.cut(
