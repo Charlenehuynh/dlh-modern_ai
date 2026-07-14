@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
+"""function contains function for new features
+from the Telco Customer Churn dataset."""
 
 import pandas as pd
-
-""" function contains function for new features
-from the Telco Customer Churn dataset."""
 
 
 def create_features(df):
