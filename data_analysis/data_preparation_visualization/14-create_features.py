@@ -2,7 +2,8 @@
 
 import pandas as pd
 
-""" function contains function for new features from the Telco Customer Churn dataset."""
+""" function contains function for new features 
+from the Telco Customer Churn dataset."""
 
 
 def create_features(df):
