@@ -9,7 +9,9 @@ from scipy import stats
 def plot_continuous_distributions(df, columns_to_plot=None):
     """Plot"""
     if columns_to_plot is None:
-        columns_to_plot = df.select_dtypes(include=[np.number]).columns.tolist()
+        columns_to_plot = df.select_dtypes(include=["number"]).columns.tolist()
+    else:
+        columns_to_plot = columns_to_plot
 
     n_cols = len(columns_to_plot)
     fig, axes = plt.subplots(n_cols, 2, figsize=(10, 3 * n_cols))
