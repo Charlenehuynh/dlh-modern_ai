@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-This module contains the function create_features.
-It engineers new features using the Telco Customer Churn dataset.
+function encode features in the Telco Customer Churn dataset for machine learning modeling.
 """
 
 import pandas as pd
@@ -10,7 +9,7 @@ from sklearn import preprocessing
 
 def encode_features(df):
     """
-    Engineers new features from the dataset.
+    Encodes features for modeling using Scikit-learn preprocessing tools.
     """
     df_enc = df.copy()
 
@@ -18,20 +17,14 @@ def encode_features(df):
     df_enc["Churn"] = churn_le.fit_transform(df_enc["Churn"])
 
     binary_cols = ["Partner", "Dependents", "PaperlessBilling", "SeniorCitizen"]
-
-    df_enc["SeniorCitizen"] = df_enc["SeniorCitizen"].map(
-        {0: "No", 1: "Yes", "No": "No", "Yes": "Yes"}
+    binary_oe = preprocessing.OrdinalEncoder(
+        categories=[["No", "Yes"]] * len(binary_cols)
     )
-
-    binary_oe = preprocessing.OrdinalEncoder(categories=[["No", "Yes"]], dtype=int)
-
-    for col in binary_cols:
-        df_enc[col] = binary_oe.fit_transform(df_enc[[col]])
+    df_enc[binary_cols] = binary_oe.fit_transform(df_enc[binary_cols]).astype(int)
 
     sorted_tenure_categories = sorted(df["TenureGroup"].unique().tolist())
-    tenure_oe = preprocessing.OrdinalEncoder(
-        categories=[sorted_tenure_categories], dtype=int
-    )
+    tenure_oe = preprocessing.OrdinalEncoder(categories=[sorted_tenure_categories])
+
     df_enc["TenureGroup"] = tenure_oe.fit_transform(df_enc[["TenureGroup"]])
 
     oh_cols = ["Contract", "PaymentMethod"]
