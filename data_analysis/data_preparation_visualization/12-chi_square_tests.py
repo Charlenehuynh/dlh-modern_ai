@@ -7,13 +7,19 @@ from scipy import stats
 
 def chi_square_tests(df):
     """Returns a dictionary: {feature_name: p_value}"""
-    p_values = {}
+    df_temp = df.copy()
 
-    for col in df.columns:
-        if col == "Churn":
-            continue
-        contingency_table = pd.crosstab(df[col], df["Churn"])
-        _, p_val, _, _ = stats.chi2_contingency(contingency_table)
-        p_values[col] = p_val
+    if "SeniorCitizen" in df_temp.columns:
+        df_temp["SeniorCitizen"] = df_temp["SeniorCitizen"].astype(str)
 
-    return p_values
+    df_sel = df_temp.select_dtypes(include=["object"])
+    df_sel = df_sel.drop(columns=["Churn"], errors="ignore")
+
+    chi_square = {}
+
+    for col in df_sel.columns:
+        contingency = pd.crosstab(df_temp[col], df_temp["Churn"])
+        _, p, _, _ = stats.chi2_contingency(contingency)
+        chi_square[col] = p
+
+    return chi_square
