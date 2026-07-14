@@ -31,7 +31,7 @@ def plot_continuous_distributions(df, columns_to_plot=None):
         ax_hist.set_title(f"{col} Histogram + KDE")
         # Right subplot
         ax_box = axes[i, 1]
-        ax_box.boxplot(data)
+        ax_box.boxplot(data, vert=False)
         ax_box.set_title(f"{col} Boxplot")
 
     plt.tight_layout()
