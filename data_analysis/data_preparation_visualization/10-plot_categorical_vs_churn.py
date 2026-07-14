@@ -18,10 +18,13 @@ def plot_categorical_vs_churn(df, col):
     Returns: None
     """
     churn_rate = (df["Churn"] == "Yes").groupby(df[col]).mean().reset_index(name="Rate")
+    labels = churn_rate[col]
+    values = churn_rate["Rate"]
     plt.figure(figsize=(12, 8))
-    plt.bar(churn_rate[col], churn_rate["Rate"])
-    plt.title(f"Churn Rate by {col}")
+    plt.bar(labels, values)
     plt.ylabel("Churn Rate")
-    plt.xlabel(col)
+    plt.title(f"Churn Rate by {col}")
     plt.xticks(rotation=45)
     plt.show()
+
+    return None
