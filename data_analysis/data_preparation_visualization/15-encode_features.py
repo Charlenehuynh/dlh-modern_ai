@@ -21,10 +21,8 @@ def encode_features(df):
     for col in binary_cols:
         df_enc[col] = binary_oe.fit_transform(df_enc[[col]]).astype(int)
 
-    sorted_tenure_categories = sorted(df["TenureGroup"].unique().tolist())
-    tenure_oe = preprocessing.OrdinalEncoder(categories=[sorted_tenure_categories])
-
-    df_enc["TenureGroup"] = tenure_oe.fit_transform(df_enc[["TenureGroup"]])
+    tenure_oe = preprocessing.OrdinalEncoder()
+    df_enc["TenureGroup"] = tenure_oe.fit_transform(df_enc[["TenureGroup"]]).astype(int)
 
     oh_cols = ["Contract", "PaymentMethod"]
     df_enc = pd.get_dummies(df_enc, columns=oh_cols, drop_first=True, dtype=int)
