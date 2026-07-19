@@ -14,9 +14,12 @@ def scrape_basic(url):
     fetch = fetch_html(url=url)
     soup = BeautifulSoup(fetch, "html.parser")
     items = soup.find_all("div", class_="quote")
+    results = []
     for quote in items:
-        text = quote.find("span", class_="text")
-        author = quote.find("small", class_="author")
-        tags = quote.find("meta", class_="keywords")
-        dict = {"text": text, "author": author, "tags": tags}
-        return dict
+        text = quote.find("span", class_="text").text
+        author = quote.find("small", class_="author").text
+        tags = quote.find_all("a", class_="tag")
+        list_tag = [i.text for i in tags]
+        dict1 = {"text": text, "author": author, "tags": list_tag}
+        results.append(dict1)
+    return results
