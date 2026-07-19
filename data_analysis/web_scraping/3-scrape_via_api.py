@@ -16,7 +16,8 @@ def scrape_via_api(base_url):
         dict1 = json.loads(current_html)
         quote_list = dict1["quotes"]
         for i in quote_list:
-            temp = {"text": i["text"], "author": i["author"]["name"], "tags": i["tags"]}
+            temp = ({"text": i["text"],
+                     "author": i["author"]["name"], "tags": i["tags"]})
             all_quote.append(temp)
         starting_page += 1
         if dict1["has_next"] is False:
