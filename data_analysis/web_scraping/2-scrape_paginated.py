@@ -32,6 +32,6 @@ def scrape_paginated(base_url):
         new_html = fetch_html(new_url)
         soup = BeautifulSoup(new_html, "html.parser")
         result = scrape_basic(new_url)
-        time.sleep(5)
+        time.sleep(1)
         list1.extend(result)
     return list1
