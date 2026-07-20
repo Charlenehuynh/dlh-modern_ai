@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
+"""function that logs in and scrapes quotes after authentication"""
+
 import requests
 from bs4 import BeautifulSoup
-
-""" function that logs in and scrapes quotes after authentication"""
 
 
 def login_and_scrape(login_url, user, pwd):
