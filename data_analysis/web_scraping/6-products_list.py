@@ -25,7 +25,7 @@ def scrape_products(url):
             description = (container.find_element
                            ("css selector", "p.description").text)
             rating_element = container.find_element(
-                By.CSS_SELECTOR, ".ratings p[data-rating]"
+                "css selector", ".ratings p[data-rating]"
             )
             rating = int(rating_element.get_attribute("data-rating"))
             products.append(
