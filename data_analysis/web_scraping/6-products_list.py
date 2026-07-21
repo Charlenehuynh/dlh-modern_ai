@@ -3,7 +3,6 @@
 
 import time
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 
 
 def scrape_products(url):
@@ -18,13 +17,13 @@ def scrape_products(url):
     try:
         driver.get(url)
 
-        containers = driver.find_elements(By.CSS_SELECTOR, ".thumbnail")
+        containers = driver.find_elements("css selector", ".thumbnail")
         for container in containers:
-            title_elment = container.find_element(By.CSS_SELECTOR, "a.title")
+            title_elment = container.find_element("css selector", "a.title")
             title = title_elment.get_attribute("title")
-            price = container.find_element(By.CSS_SELECTOR, "h4.price").text
+            price = container.find_element("css selector", "h4.price").text
             description = (container.find_element
-                        (By.CSS_SELECTOR, "p.description").text)
+                           ("css selector", "p.description").text)
             rating_element = container.find_element(
                 By.CSS_SELECTOR, ".ratings p[data-rating]"
             )
