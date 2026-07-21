@@ -26,19 +26,23 @@ def scroll_and_scrape(url, scroll_pause=2.0):
     try:
         driver.get(url)
 
-        last_height = driver.execute_script("return document.body.scrollHeight")
+        last_height = (driver.execute_script
+                       ("return document.body.scrollHeight"))
 
         while True:
-            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            (driver.execute_script
+             ("window.scrollTo(0, document.body.scrollHeight);"))
 
             start_time = time.time()
             while time.time() - start_time < scroll_pause:
-                new_height = driver.execute_script("return document.body.scrollHeight")
+                new_height = (driver.execute_script
+                              ("return document.body.scrollHeight"))
                 if new_height > last_height:
                     break
                 time.sleep(0.1)
 
-            new_height = driver.execute_script("return document.body.scrollHeight")
+            new_height = (driver.execute_script
+                          ("return document.body.scrollHeight"))
             if new_height == last_height:
                 break
             last_height = new_height
@@ -48,7 +52,8 @@ def scroll_and_scrape(url, scroll_pause=2.0):
         for card in product_cards:
             try:
                 title_elem = card.find_element("css selector", "a.title")
-                title = title_elem.get_attribute("title") or title_elem.text.strip()
+                title = (title_elem.get_attribute("title")
+                         or title_elem.text.strip())
             except Exception:
                 title = ""
 
@@ -64,7 +69,8 @@ def scroll_and_scrape(url, scroll_pause=2.0):
             except Exception:
                 description = ""
 
-            stars = card.find_elements("css selector", ".ratings .ws-icon-star")
+            stars = (card.find_elements
+                     ("css selector", ".ratings .ws-icon-star"))
             rating = len(stars)
 
             product_identifier = (title, price)
