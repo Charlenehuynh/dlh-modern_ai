@@ -1,39 +1,36 @@
-#!/usr/bin/env python3
-"""Scrape a single product detail page from webscraper.io."""
-
 import time
 from selenium import webdriver
 
 
 def scrape_product_detail(url, delay=2.0):
-    """Open a product detail page, wait, and return its details."""
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless=new")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
+    browser_options = webdriver.ChromeOptions()
+    browser_options.add_argument("--headless")
+    browser_options.add_argument("--window-size=1920,1080")
+    browser_options.add_argument("--no-sandbox")
+    browser_options.add_argument("--disable-dev-shm-usage")
 
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(options=browser_options)
+    driver.get(url)
+    time.sleep(delay)
 
+    product = {}
     try:
-        driver.get(url)
-        time.sleep(delay)
+        title = driver.find_element(
+            "css selector", ".caption h4:nth-of-type(2)"
+        ).text.strip()
 
-        # Title: second <h4> inside .caption
-        h4_elements = driver.find_elements("css selector", ".caption h4")
-        title = h4_elements[1].text
+        price = driver.find_element("class name", "price").text
 
-        # Price: first <h4 class="price">
-        price = driver.find_element("css selector", "h4.price").text
+        description = driver.find_element(
+            "class name", "description"
+        ).text.strip()
 
-        # Description
-        description = driver.find_element("css selector", "p.description").text
+        rating_element = driver.find_elements(
+            "css selector", ".ratings .ws-icon-star"
+        )
+        rating = len(rating_element)
 
-        # Rating: count of star icons inside .ratings
-        stars = driver.find_elements("css selector",
-                                     ".ratings p.ws-icon.ws-icon-star")
-        rating = len(stars)
-
-        return {
+        product = {
             "title": title,
             "price": price,
             "description": description,
@@ -41,3 +38,5 @@ def scrape_product_detail(url, delay=2.0):
         }
     finally:
         driver.quit()
+
+    return product
