@@ -1,8 +1,12 @@
+#!/usr/bin/env python3
+"""Scrape a single product detail page from webscraper.io."""
+
 import time
 from selenium import webdriver
 
 
 def scrape_product_detail(url, delay=2.0):
+    """Open a product detail page, wait, and return its details."""
     browser_options = webdriver.ChromeOptions()
     browser_options.add_argument("--headless")
     browser_options.add_argument("--window-size=1920,1080")
@@ -21,13 +25,11 @@ def scrape_product_detail(url, delay=2.0):
 
         price = driver.find_element("class name", "price").text
 
-        description = driver.find_element(
-            "class name", "description"
-        ).text.strip()
+        description = (driver.find_element
+                       ("class name", "description").text.strip())
 
-        rating_element = driver.find_elements(
-            "css selector", ".ratings .ws-icon-star"
-        )
+        rating_element = (driver.find_elements("css selector",
+                                               ".ratings .ws-icon-star"))
         rating = len(rating_element)
 
         product = {
