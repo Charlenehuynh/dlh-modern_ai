@@ -4,7 +4,7 @@
 
 from sklearn import metrics
 
-K_Means = __import__("2-k_means").K_Means
+K_Means = __import__('2-k_means').K_Means
 
 
 def optimal_k(X, max_clusters, random_state):
