@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import load_wine
 from scipy.cluster.hierarchy import linkage, dendrogram
 
-Standardize = __import__("0-standardize").Standardize
-Apply_PCA = __import__("1-pca").Apply_PCA
+Standardize = __import__('0-standardize').Standardize
+Apply_PCA = __import__('1-pca').Apply_PCA
 
 
 X, _ = load_wine(return_X_y=True)
