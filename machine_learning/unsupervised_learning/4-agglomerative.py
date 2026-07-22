@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Performs Agglomerative hierarchical clustering on tabular data using Scikit-learn.
+Performs Agglomerative hierarchical clustering on tabular data.
 """
 
 from sklearn import cluster
@@ -18,7 +18,8 @@ def Agglomerative_Clustering(
                               random_state=random_state)
     else:
         X_used = X
-    agg_model = cluster.AgglomerativeClustering(n_clusters=n_clusters, linkage="ward")
+    agg_model = cluster.AgglomerativeClustering(n_clusters=n_clusters,
+                                                linkage="ward")
     labels = agg_model.fit_predict(X_used)
     if n_clusters > 1:
         score = metrics.silhouette_score(X_used, labels)
