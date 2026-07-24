@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-from sklearn import ensemble
-
 """Create a random forest classifier"""
+
+from sklearn import ensemble
 
 
 def random_forest(n_estimators, random_state):
