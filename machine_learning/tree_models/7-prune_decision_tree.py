@@ -3,7 +3,7 @@
 
 from sklearn import tree
 
-train_tree = __import__("1-train").train_tree
+train_tree = __import__('1-train').train_tree
 
 
 def prune_and_evaluate_trees(
