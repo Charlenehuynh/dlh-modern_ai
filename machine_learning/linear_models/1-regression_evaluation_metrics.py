@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """compute common evaluation metrics for regression"""
+
 from sklearn import metrics
 import numpy as np
+
 
 def evaluation_metrics_for_regression(y_true, y_pred):
     """
