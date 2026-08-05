@@ -3,6 +3,7 @@
 
 from tensorflow import keras
 
+
 def build_model(input_dim, neurons_h):
     """
     Creates a shallow neural network using keras.Model (Functional API).
