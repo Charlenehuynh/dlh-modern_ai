@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-from tensorflow import keras
+"""functions to save and reload a Keras model"""
 
-""" functions to save and reload a Keras model"""
+from tensorflow import keras
 
 
 def save_model(model, filepath):
