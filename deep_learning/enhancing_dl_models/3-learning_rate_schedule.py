@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""return a Keras SGD optimizer with momentum and a specified learning rate schedule."""
+"""return a Keras SGD optimizer and a specified learning rate schedule."""
 
 from tensorflow import keras
 
