@@ -2,7 +2,7 @@
 
 """return a configured gradient descent optimizer"""
 
-from tensorflow.keras.optimizers import SGD
+from tensorflow import keras
 
 
 def train_with_gradient_descent_variant(variant, learning_rate, x_train,
@@ -14,7 +14,7 @@ def train_with_gradient_descent_variant(variant, learning_rate, x_train,
         batch_size = 1
     elif variant == "mini_batch":
         batch_size = batch_size
-    optimizer = SGD(
+    optimizer = keras.optimizers.SGD(
         learning_rate=learning_rate,
     )
     return optimizer, batch_size
