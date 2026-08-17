@@ -5,25 +5,38 @@ from tensorflow import keras
 
 
 def build_model_initializer_by_activation(input_dim, hidden_units, activation):
-    if activation == "sigmoid" or activation == "tanh":
+    """return model: A Keras model with the described architecture."""
+    if activation in ("sigmoid", "tanh"):
         initializer = keras.initializers.GlorotUniform()
-        hidden_activation = activation
+        dense_activation = activation
+        extra_layer = None
     elif activation == "relu":
         initializer = keras.initializers.HeNormal()
-        hidden_activation = activation
-    if activation == "leaky_relu":
+        dense_activation = "relu"
+        extra_layer = None
+    elif activation == "leaky_relu":
         initializer = keras.initializers.HeNormal()
-        hidden_activation = keras.layers.LeakyReLU()
+        dense_activation = None  # apply LeakyReLU as its own layer
+        extra_layer = keras.layers.LeakyReLU()
+    else:
+        raise ValueError(f"Unsupported activation: {activation}")
 
-    model = keras.Sequential(
-        [
-            keras.layers.Input(shape=(input_dim,)),
-            keras.layers.Dense(
-                hidden_units,
-                activation=hidden_activation,
-                kernel_initializer=initializer,
-            ),
-            keras.layers.Dense(10, activation="softmax"),
-        ]
+    layers = [
+        keras.layers.Input(shape=(input_dim,)),
+        keras.layers.Dense(
+            hidden_units,
+            activation=dense_activation,
+            kernel_initializer=initializer,
+        ),
+    ]
+    if extra_layer is not None:
+        layers.append(extra_layer)
+    layers.append(keras.layers.Dense(10, activation="softmax"))
+
+    model = keras.Sequential(layers)
+    model.compile(
+        optimizer="adam",
+        loss="categorical_crossentropy",
+        metrics=["accuracy"],
     )
     return model
