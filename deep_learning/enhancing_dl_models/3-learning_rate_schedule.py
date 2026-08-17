@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""return a Keras SGD optimizer with momentum and a specified learning rate schedule."""
 
 from tensorflow import keras
 
@@ -39,6 +40,6 @@ def get_optimizer_SGD_with_schedule(
             decay_rate=decay_rate,
             staircase=True,
         )
-    optimizer = keras.optimizers.SGD(
-        learning_rate=lr_schedule, momentum=momentum)
+    optimizer = keras.optimizers.SGD(learning_rate=lr_schedule,
+                                     momentum=momentum)
     return optimizer, lr_schedule
