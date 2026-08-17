@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""returns a Keras optimizer configured based on the specified optimizer name"""
+"""returns a Keras optimizer based on the specified optimizer name"""
 
 from tensorflow import keras
 
