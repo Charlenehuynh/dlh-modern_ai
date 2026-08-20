@@ -4,7 +4,8 @@
 from tensorflow import keras
 
 
-def build_model_with_L2_regularization(input_dim, hidden_units, n_layers, lambda_l2):
+def build_model_with_L2_regularization(
+        input_dim, hidden_units, n_layers, lambda_l2):
     """Return : model: A Keras model with L2 reg."""
     model = keras.Sequential()
     model.add(keras.Input(shape=(input_dim,)))
