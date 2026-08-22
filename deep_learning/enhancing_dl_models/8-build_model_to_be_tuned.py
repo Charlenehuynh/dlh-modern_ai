@@ -21,8 +21,8 @@ def build_model(hp):
         )
     model.add(keras.layers.Dense(10, activation="softmax"))
     learning_rate = hp.Choice("learning_rate", values=[1e-2, 1e-3])
-    optimiser = keras.optimizers.Adam(learning_rate)
+    optimizer = keras.optimizers.Adam(learning_rate)
     model.compile(
-        optimiser, loss="sparse_categorical_crossentropy", metrics=["accuracy"]
+        optimizer=optimizer, loss="categorical_crossentropy", metrics=["accuracy"]
     )
     return model
