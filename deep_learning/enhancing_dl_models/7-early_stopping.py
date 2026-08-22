@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-from tensorflow import keras
+"""create a customizable early stopping callback for Keras training"""
 
-"""  create a customizable early stopping callback for Keras training """
+from tensorflow import keras
 
 
 def get_early_stopping_callback(patience, monitor="val_loss", verbose=1):
