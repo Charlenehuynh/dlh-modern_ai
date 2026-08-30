@@ -2,6 +2,7 @@
 """Builds the ResNet-101 architecture as described in
 'Deep Residual Learning for Image Recognition' (He et al., 2015).
 """
+
 from tensorflow import keras
 
 
@@ -22,36 +23,56 @@ def bottleneck_block(x, filters, stride=1, downsample=False, name=None):
     shortcut = x
 
     x = keras.layers.Conv2D(
-        filters, 1, strides=stride, padding='same', use_bias=False,
-        kernel_initializer='he_normal', name=f'{name}_conv1'
+        filters,
+        1,
+        strides=stride,
+        padding="same",
+        use_bias=False,
+        kernel_initializer="he_normal",
+        name=f"{name}_conv1",
     )(x)
-    x = keras.layers.BatchNormalization(name=f'{name}_bn1')(x)
-    x = keras.layers.ReLU(name=f'{name}_relu1')(x)
+    x = keras.layers.BatchNormalization(name=f"{name}_bn1")(x)
+    x = keras.layers.ReLU(name=f"{name}_relu1")(x)
 
     x = keras.layers.Conv2D(
-        filters, 3, strides=1, padding='same', use_bias=False,
-        kernel_initializer='he_normal', name=f'{name}_conv2'
+        filters,
+        3,
+        strides=1,
+        padding="same",
+        use_bias=False,
+        kernel_initializer="he_normal",
+        name=f"{name}_conv2",
     )(x)
-    x = keras.layers.BatchNormalization(name=f'{name}_bn2')(x)
-    x = keras.layers.ReLU(name=f'{name}_relu2')(x)
+    x = keras.layers.BatchNormalization(name=f"{name}_bn2")(x)
+    x = keras.layers.ReLU(name=f"{name}_relu2")(x)
 
     x = keras.layers.Conv2D(
-        filters * 4, 1, strides=1, padding='same', use_bias=False,
-        kernel_initializer='he_normal', name=f'{name}_conv3'
+        filters * 4,
+        1,
+        strides=1,
+        padding="same",
+        use_bias=False,
+        kernel_initializer="he_normal",
+        name=f"{name}_conv3",
     )(x)
-    x = keras.layers.BatchNormalization(name=f'{name}_bn3')(x)
+    x = keras.layers.BatchNormalization(name=f"{name}_bn3")(x)
 
     if downsample:
         shortcut = keras.layers.Conv2D(
-            filters * 4, 1, strides=stride, padding='same', use_bias=False,
-            kernel_initializer='he_normal', name=f'{name}_downsample_conv'
+            filters * 4,
+            1,
+            strides=stride,
+            padding="same",
+            use_bias=False,
+            kernel_initializer="he_normal",
+            name=f"{name}_downsample_conv",
         )(shortcut)
-        shortcut = keras.layers.BatchNormalization(
-            name=f'{name}_downsample_bn'
-        )(shortcut)
+        shortcut = keras.layers.BatchNormalization(name=f"{name}_downsample_bn")(
+            shortcut
+        )
 
-    x = keras.layers.Add(name=f'{name}_add')([x, shortcut])
-    x = keras.layers.ReLU(name=f'{name}_out')(x)
+    x = keras.layers.Add(name=f"{name}_add")([x, shortcut])
+    x = keras.layers.ReLU(name=f"{name}_out")(x)
 
     return x
 
@@ -63,11 +84,13 @@ def make_layer(x, blocks, filters, stride=1, name=None):
     the shortcut's number of channels (and, when stride > 1, its
     spatial dimensions) matches the main path's output.
     """
-    x = bottleneck_block(x, filters, stride=stride, downsample=True,
-                          name=f'{name}_block1')
+    x = bottleneck_block(
+        x, filters, stride=stride, downsample=True, name=f"{name}_block1"
+    )
     for i in range(1, blocks):
-        x = bottleneck_block(x, filters, stride=1, downsample=False,
-                              name=f'{name}_block{i + 1}')
+        x = bottleneck_block(
+            x, filters, stride=1, downsample=False, name=f"{name}_block{i + 1}"
+        )
     return x
 
 
@@ -79,31 +102,34 @@ def build_resnet101(input_shape=(224, 224, 3), num_classes=1000):
 
     Returns: the Keras Model implementing ResNet-101.
     """
-    input_layer = keras.Input(shape=input_shape, name='input_layer')
+    input_layer = keras.Input(shape=input_shape, name="input_layer")
 
     # Initial conv + max pool (stem)
     x = keras.layers.Conv2D(
-        64, 7, strides=2, padding='same', use_bias=False,
-        kernel_initializer='he_normal', name='conv1'
+        64,
+        7,
+        strides=2,
+        padding="same",
+        use_bias=False,
+        kernel_initializer="he_normal",
+        name="conv1",
     )(input_layer)
-    x = keras.layers.BatchNormalization(name='bn1')(x)
-    x = keras.layers.ReLU(name='relu1')(x)
+    x = keras.layers.BatchNormalization(name="bn1")(x)
+    x = keras.layers.ReLU(name="relu1")(x)
     x = keras.layers.MaxPooling2D(
-        pool_size=3, strides=2, padding='same', name='maxpool'
+        pool_size=3, strides=2, padding="same", name="maxpool"
     )(x)
 
     # Standard ResNet-101 stage configuration
-    x = make_layer(x, blocks=3, filters=64, stride=1, name='layer1')
-    x = make_layer(x, blocks=4, filters=128, stride=2, name='layer2')
-    x = make_layer(x, blocks=23, filters=256, stride=2, name='layer3')
-    x = make_layer(x, blocks=3, filters=512, stride=2, name='layer4')
+    x = make_layer(x, blocks=3, filters=64, stride=1, name="layer1")
+    x = make_layer(x, blocks=4, filters=128, stride=2, name="layer2")
+    x = make_layer(x, blocks=23, filters=256, stride=2, name="layer3")
+    x = make_layer(x, blocks=3, filters=512, stride=2, name="layer4")
 
     # Classification head
-    x = keras.layers.GlobalAveragePooling2D(name='avgpool')(x)
-    output = keras.layers.Dense(
-        num_classes, activation='softmax', name='fc'
-    )(x)
+    x = keras.layers.GlobalAveragePooling2D(name="avgpool")(x)
+    output = keras.layers.Dense(num_classes, activation="softmax", name="fc")(x)
 
-    model = keras.Model(inputs=input_layer, outputs=output, name='resnet101')
+    model = keras.Model(inputs=input_layer, outputs=output, name="resnet101")
 
     return model
