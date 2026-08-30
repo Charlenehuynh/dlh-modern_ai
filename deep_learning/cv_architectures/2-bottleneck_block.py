@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """that implements a ResNet bottleneck residual block."""
 
-from tensorflow.keras import layers
+from tensorflow import keras
 
 
 def bottleneck_block(x, filters, stride=1, downsample=False, name=None):
@@ -23,13 +23,14 @@ def bottleneck_block(x, filters, stride=1, downsample=False, name=None):
     """
     shortcut = x
 
-    out = layers.Conv2D(
-        filters, kernel_size=1, strides=stride, use_bias=False, name=f"{name}_conv1"
+    out = keras.layers.Conv2D(
+        filters, kernel_size=1, strides=stride, use_bias=False,
+        name=f"{name}_conv1"
     )(x)
-    out = layers.BatchNormalization(name=f"{name}_bn1")(out)
-    out = layers.ReLU(name=f"{name}_relu1")(out)
+    out = keras.layers.BatchNormalization(name=f"{name}_bn1")(out)
+    out = keras.layers.ReLU(name=f"{name}_relu1")(out)
 
-    out = layers.Conv2D(
+    out = keras.layers.Conv2D(
         filters,
         kernel_size=3,
         strides=1,
@@ -37,24 +38,25 @@ def bottleneck_block(x, filters, stride=1, downsample=False, name=None):
         use_bias=False,
         name=f"{name}_conv2",
     )(out)
-    out = layers.BatchNormalization(name=f"{name}_bn2")(out)
-    out = layers.ReLU(name=f"{name}_relu2")(out)
+    out = keras.layers.BatchNormalization(name=f"{name}_bn2")(out)
+    out = keras.layers.ReLU(name=f"{name}_relu2")(out)
 
-    out = layers.Conv2D(
-        filters * 4, kernel_size=1, strides=1, use_bias=False, name=f"{name}_conv3"
+    out = keras.layers.Conv2D(
+        filters * 4, kernel_size=1, strides=1, use_bias=False,
+        name=f"{name}_conv3"
     )(out)
-    out = layers.BatchNormalization(name=f"{name}_bn3")(out)
+    out = keras.layers.BatchNormalization(name=f"{name}_bn3")(out)
 
     if downsample:
-        shortcut = layers.Conv2D(
+        shortcut = keras.layers.Conv2D(
             filters * 4,
             kernel_size=1,
             strides=stride,
             use_bias=False,
             name=f"{name}_shortcut_conv",
         )(shortcut)
-        shortcut = layers.BatchNormalization(name=f"{name}_shortcut_bn")(shortcut)
+        shortcut = keras.layers.BatchNormalization(name=f"{name}_shortcut_bn")(shortcut)
 
-    out = layers.Add(name=f"{name}_add")([out, shortcut])
-    out = layers.ReLU(name=f"{name}_out_relu")(out)
+    out = keras.layers.Add(name=f"{name}_add")([out, shortcut])
+    out = keras.layers.ReLU(name=f"{name}_out_relu")(out)
     return out
