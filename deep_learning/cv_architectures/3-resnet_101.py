@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""Builds the ResNet-101 architecture as described in
-'Deep Residual Learning for Image Recognition' (He et al., 2015).
-"""
+"""Builds the ResNet-101 architecture"""
 
 from tensorflow import keras
 
 
 def bottleneck_block(x, filters, stride=1, downsample=False, name=None):
-    """Builds a bottleneck residual block (1x1 -> 3x3 -> 1x1 convs)."""
+    """Builds a bottleneck residual block."""
     shortcut = x
 
     x = keras.layers.Conv2D(
