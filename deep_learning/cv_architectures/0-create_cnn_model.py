@@ -7,7 +7,7 @@ from tensorflow import keras
 def create_cnn_model(
     input_shape, filters, kernel_sizes, activations, pooling_type="max"
 ):
-    """ """
+    """ Returns a compiled CNN model. """
     layers = [keras.Input(shape=input_shape)]
     for f, k, a in zip(filters, kernel_sizes, activations):
         layers.append(keras.layers.Conv2D(f, k, activation=a))
