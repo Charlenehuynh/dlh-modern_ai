@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Defines the mobilenet function"""
+
 from tensorflow import keras as K
-mobilenet_backbone = __import__('5-mobilenet_backbone').mobilenet_backbone
+
+mobilenet_backbone = __import__("5-mobilenet_backbone").mobilenet_backbone
 
 
 def mobilenet(input_shape=(224, 224, 3), num_classes=1000):
@@ -27,11 +29,9 @@ def mobilenet(input_shape=(224, 224, 3), num_classes=1000):
     # Classification head
     Y = K.layers.GlobalAveragePooling2D()(Y)
     Y = K.layers.Dense(
-        units=num_classes,
-        activation='softmax',
-        kernel_initializer=init
+        units=num_classes, activation="softmax", kernel_initializer=init
     )(Y)
 
-    model = K.Model(inputs=X, outputs=Y, name='MobileNetV1')
+    model = K.Model(inputs=X, outputs=Y, name="MobileNetV1")
 
     return model
