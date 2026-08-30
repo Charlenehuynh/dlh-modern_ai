@@ -16,7 +16,6 @@ def create_cnn_model(
         elif pooling_type == "avg":
             layers.append(keras.layers.AveragePooling2D(pool_size=(2, 2)))
     layers.append(keras.layers.Flatten())
-    layers.append(keras.layers.Dense(128, activation="relu"))
     layers.append(keras.layers.Dense(10, activation="softmax"))
     model = keras.Sequential(layers)
     return model
