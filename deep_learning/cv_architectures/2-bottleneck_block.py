@@ -55,7 +55,8 @@ def bottleneck_block(x, filters, stride=1, downsample=False, name=None):
             use_bias=False,
             name=f"{name}_shortcut_conv",
         )(shortcut)
-        shortcut = keras.layers.BatchNormalization(name=f"{name}_shortcut_bn")(shortcut)
+        shortcut = keras.layers.BatchNormalization(name=f"{name}_shortcut_bn")
+        (shortcut)
 
     out = keras.layers.Add(name=f"{name}_add")([out, shortcut])
     out = keras.layers.ReLU(name=f"{name}_out_relu")(out)
