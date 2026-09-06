@@ -1,31 +1,35 @@
 #!/usr/bin/env python3
-"""Unfreezes the top layers of a pretrained backbone for fine-tuning."""
+"""
+This Module unfreezes the last N layers of the base model.
+"""
 
 
-def unfreeze_top_layers(base_model, num_layers):
+def unfreeze_top_layers(model, n_layers):
     """
-    Unfreezes the top `num_layers` layers of a pretrained backbone,
-    keeping BatchNormalization layers frozen to preserve their
-    learned statistics during fine-tuning.
+    Unfreeze the last n_layers of the base model inside
+    a transfer learning pipeline, and leaves the rest frozen.
+
+    The function should:
+    - Assume the base model is the first layer of the input model.
+    - Unfreeze the last n_layers of the base model.
+    - Leave earlier layers frozen.
 
     Args:
-        base_model: A Keras Model (e.g. the MobileNetV2 backbone)
-            whose layers should be selectively unfrozen.
-        num_layers: An integer, the number of layers (counted from
-            the end of the model) to unfreeze.
+        model: A full Keras Model with a base model as its first layer.
+        n_layers: Integer specifying how many of the last layers in
+                  the base model should be unfrozen (set as trainable).
 
     Returns:
-        None. The base_model is modified in place.
+        None
     """
-    base_model.trainable = True
+    base_model = model.layers[0]
 
-    freeze_until = len(base_model.layers) - num_layers
+    if n_layers <= 0 or n_layers > len(base_model.layers):
+        raise ValueError(
+            "n must be a positive integer and "
+            "n must be less or equal to "
+            "the number of layers in the base model"
+        )
 
-    for layer in base_model.layers[:freeze_until]:
-        layer.trainable = False
-
-    for layer in base_model.layers[freeze_until:]:
-        if isinstance(layer, __import__("tensorflow").keras.layers.BatchNormalization):
-            layer.trainable = False
-        else:
-            layer.trainable = True
+    for layer in base_model.layers[-n_layers:]:
+        layer.trainable = True
