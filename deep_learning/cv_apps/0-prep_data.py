@@ -3,34 +3,6 @@
 Prepare a YOLOv8-format detection dataset from Pascal VOC 2012, keeping
 only the classes: person, car, bicycle.
 
-Run this on a machine with normal internet access (not inside a
-sandboxed environment) since it downloads the ~1.9 GB VOC2012 archive.
-
-Usage:
-    python prepare_voc_yolo.py [--project-dir cv_apps]
-    python prepare_voc_yolo.py --voc-root /path/to/VOC2012
-        # ^ skip download, use an already-extracted local copy
-
-Behavior:
-  1. Downloads VOCtrainval_11-May-2012.tar (skipped if already present, and
-     skipped entirely if --voc-root points at an already-extracted VOC2012
-     folder, e.g. one a teammate already downloaded).
-  2. Extracts only Annotations/ and JPEGImages/ from the archive.
-  3. Determines the train/val split:
-       - If train_samples.txt and val_samples.txt exist (in the current
-         directory, or next to this script), those exact filenames are
-         used (one image name per line, with or without extension).
-       - Otherwise, falls back to VOC's own ImageSets/Main/train.txt and
-         val.txt, filtered to images that contain at least one of the
-         kept classes.
-  4. Converts each VOC XML annotation into a YOLO .txt label, keeping only
-     boxes for person/car/bicycle (remapped to class ids 0/1/2). Images
-     with no boxes in the kept classes are skipped.
-  5. Copies the matching images/labels into:
-         <project_dir>/datasets/detection/images/{train,val}/
-         <project_dir>/datasets/detection/labels/{train,val}/
-  6. Writes datasets/detection/data.yaml
-  7. Deletes the downloaded tar + extracted VOCdevkit folder to save disk.
 """
 
 import argparse
@@ -44,8 +16,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 VOC_URL = (
-    "https://thor.robots.ox.ac.uk/pascal/VOC/voc2012/"
-    "VOCtrainval_11-May-2012.tar"
+    "https://thor.robots.ox.ac.uk/pascal/VOC/voc2012/" "VOCtrainval_11-May-2012.tar"
 )
 TAR_NAME = "VOCtrainval_11-May-2012.tar"
 KEPT_CLASSES = ["person", "car", "bicycle"]  # index = YOLO class id
@@ -111,9 +82,7 @@ def extract_voc(tar_path: Path, extract_dir: Path) -> Path:
         "VOCdevkit/VOC2012/ImageSets/Main/",
     )
     with tarfile.open(tar_path, "r") as tf:
-        members = [
-            m for m in tf.getmembers() if m.name.startswith(wanted_prefixes)
-        ]
+        members = [m for m in tf.getmembers() if m.name.startswith(wanted_prefixes)]
         tf.extractall(path=extract_dir, members=members)
 
     print(f"[extract] Done -> {voc_root}")
@@ -187,8 +156,7 @@ def build_fallback_split(voc_root: Path):
                 continue
             boxes, _, _ = parse_voc_annotation(xml_path)
             if any(
-                b[0] in CLASS_TO_ID and not (b[5] and SKIP_DIFFICULT)
-                for b in boxes
+                b[0] in CLASS_TO_ID and not (b[5] and SKIP_DIFFICULT) for b in boxes
             ):
                 keep.append(name)
         return keep
@@ -242,9 +210,7 @@ def convert_split(names, voc_root: Path, images_out: Path, labels_out: Path):
 
         boxes, img_w, img_h = parse_voc_annotation(xml_path)
         yolo_lines = [
-            voc_box_to_yolo_line(
-                CLASS_TO_ID[cls], xmin, ymin, xmax, ymax, img_w, img_h
-            )
+            voc_box_to_yolo_line(CLASS_TO_ID[cls], xmin, ymin, xmax, ymax, img_w, img_h)
             for (cls, xmin, ymin, xmax, ymax, is_difficult) in boxes
             if cls in CLASS_TO_ID and not (is_difficult and SKIP_DIFFICULT)
         ]
@@ -284,8 +250,7 @@ def main():
         "--project-dir",
         default="cv_apps",
         help=(
-            "Project root that will contain datasets/detection/ "
-            "(default: cv_apps)"
+            "Project root that will contain datasets/detection/ " "(default: cv_apps)"
         ),
     )
     parser.add_argument(
