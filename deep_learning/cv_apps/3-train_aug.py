@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-"""Train a YOLO model with configurable augmentation, including support
-for a fully custom Albumentations pipeline."""
+"""Train a YOLO model with a custom Albumentations augmentation pipeline."""
 
-from ultralytics import YOLO
-from ultralytics.data.augment import Albumentations
 import albumentations as A
+import numpy as np
 
 
 def train_with_augmentation(
@@ -20,14 +18,16 @@ def train_with_augmentation(
     plots=True,
     verbose=True,
 ):
-    """
-    Trains a YOLO model, optionally overriding its built-in augmentation
-    with a custom Albumentations pipeline.
+    """Trains a YOLO model, optionally using a custom Albumentations
+    pipeline in place of YOLO's built-in augmentations.
 
-    Returns:
-        Tuple[YOLO, Any]: The trained YOLO model and the full training
-        results object (as returned by `model.train`).
+    Returns the trained model and the training results object.
     """
+    YOLO = __import__("ultralytics").YOLO
+    Albumentations = __import__(
+        "ultralytics.data.augment", fromlist=["Albumentations"]
+    ).Albumentations
+
     if albumentations_transforms is not None:
 
         def custom_init(self, p=1.0):
