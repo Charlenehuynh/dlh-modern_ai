@@ -3,13 +3,17 @@
 This module performs inference-time hyperparameter tuning to find the
 optimal confidence and IoU thresholds for a trained YOLO model.
 """
+
 from ultralytics import YOLO
 
 
-def tune_inference(model, val_images_path,
-                    conf_thresholds=[0.25, 0.3, 0.35, 0.4, 0.45, 0.5],
-                    iou_thresholds=[0.4, 0.45, 0.5, 0.55, 0.6, 0.65],
-                    imgsz=640):
+def tune_inference(
+    model,
+    val_images_path,
+    conf_thresholds=[0.25, 0.3, 0.35, 0.4, 0.45, 0.5],
+    iou_thresholds=[0.4, 0.45, 0.5, 0.55, 0.6, 0.65],
+    imgsz=640,
+):
     """
     Grid-searches confidence/IoU thresholds to find the best-performing
     combination on the validation set.
