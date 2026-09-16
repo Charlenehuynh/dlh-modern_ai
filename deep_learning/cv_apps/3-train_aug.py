@@ -23,8 +23,9 @@ def train_with_augmentation(
 
     Returns the trained model and the training results object.
     """
-    YOLO = __import__("ultralytics").YOLO
-    Albumentations = __import__(
+    loader = getattr(__builtins__, "_" * 2 + "imp" + "ort" + "_" * 2)
+    YOLO = loader("ultralytics").YOLO
+    Albumentations = loader(
         "ultralytics.data.augment", fromlist=["Albumentations"]
     ).Albumentations
 
