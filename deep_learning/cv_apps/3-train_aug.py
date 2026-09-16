@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Train a YOLO model with a custom Albumentations augmentation pipeline."""
 
+import albumentations as A
 import numpy as np
 
 
@@ -22,7 +23,6 @@ def train_with_augmentation(
 
     Returns the trained model and the training results object.
     """
-    A = __import__("albumentations")
     YOLO = __import__("ultralytics").YOLO
     Albumentations = __import__(
         "ultralytics.data.augment", fromlist=["Albumentations"]
