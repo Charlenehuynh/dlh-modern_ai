@@ -16,7 +16,8 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 VOC_URL = (
-    "https://thor.robots.ox.ac.uk/pascal/VOC/voc2012/" "VOCtrainval_11-May-2012.tar"
+    "https://thor.robots.ox.ac.uk/pascal/VOC/voc2012/"
+    "VOCtrainval_11-May-2012.tar"
 )
 TAR_NAME = "VOCtrainval_11-May-2012.tar"
 KEPT_CLASSES = ["person", "car", "bicycle"]  # index = YOLO class id
@@ -82,7 +83,9 @@ def extract_voc(tar_path: Path, extract_dir: Path) -> Path:
         "VOCdevkit/VOC2012/ImageSets/Main/",
     )
     with tarfile.open(tar_path, "r") as tf:
-        members = [m for m in tf.getmembers() if m.name.startswith(wanted_prefixes)]
+        members = [
+            m for m in tf.getmembers() if m.name.startswith(wanted_prefixes)
+        ]
         tf.extractall(path=extract_dir, members=members)
 
     print(f"[extract] Done -> {voc_root}")
@@ -156,7 +159,8 @@ def build_fallback_split(voc_root: Path):
                 continue
             boxes, _, _ = parse_voc_annotation(xml_path)
             if any(
-                b[0] in CLASS_TO_ID and not (b[5] and SKIP_DIFFICULT) for b in boxes
+                b[0] in CLASS_TO_ID and not (b[5] and SKIP_DIFFICULT)
+                for b in boxes
             ):
                 keep.append(name)
         return keep
@@ -210,7 +214,9 @@ def convert_split(names, voc_root: Path, images_out: Path, labels_out: Path):
 
         boxes, img_w, img_h = parse_voc_annotation(xml_path)
         yolo_lines = [
-            voc_box_to_yolo_line(CLASS_TO_ID[cls], xmin, ymin, xmax, ymax, img_w, img_h)
+            voc_box_to_yolo_line(
+                CLASS_TO_ID[cls], xmin, ymin, xmax, ymax, img_w, img_h
+            )
             for (cls, xmin, ymin, xmax, ymax, is_difficult) in boxes
             if cls in CLASS_TO_ID and not (is_difficult and SKIP_DIFFICULT)
         ]
@@ -250,7 +256,8 @@ def main():
         "--project-dir",
         default="cv_apps",
         help=(
-            "Project root that will contain datasets/detection/ " "(default: cv_apps)"
+            "Project root that will contain datasets/detection/ "
+            "(default: cv_apps)"
         ),
     )
     parser.add_argument(
