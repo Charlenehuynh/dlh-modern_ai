@@ -3,7 +3,6 @@
 This module performs inference-time hyperparameter tuning to find the
 optimal confidence and IoU thresholds for a trained YOLO model.
 """
-import numpy as np
 from ultralytics import YOLO
 
 
