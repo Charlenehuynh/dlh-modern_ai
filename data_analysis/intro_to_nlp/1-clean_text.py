@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ Function that cleans and normalize SMS messages """
 
-
+import html
 import re
 import emoji
 
