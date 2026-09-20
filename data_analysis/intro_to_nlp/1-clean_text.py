@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ Function that cleans and normalize SMS messages """
 
-import html
+
 import re
 import emoji
 
@@ -35,7 +35,7 @@ def clean_text(
         return ""
     # 1. lowercase + strip
     new_text = text.lower().strip()
-    new_text = html.unescape(new_text)
+    
     # 2. dataset placeholders
     for old, new in _DATASET_PLACEHOLDER_MAP.items():
         new_text = new_text.replace(old, new)
