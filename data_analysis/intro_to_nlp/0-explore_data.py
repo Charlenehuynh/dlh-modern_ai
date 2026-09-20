@@ -1,28 +1,41 @@
 #!/usr/bin/env python3
-"""function that performs initial dataset exploration:"""
-
+"""
+This module performs initial dataset exploration.
+"""
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 
 def explore_data(df):
-    """Left subplot: bar chart of ham vs spam counts using sns.barplot:
-    Returns: None
-    Imports: import matplotlib.pyplot as plt and import seaborn as sns"""
-    lengths = df["message"].str.len()
-    counts = df["label"].value_counts()
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
-    # Left: ham vs spam counts
-    sns.barplot(x=counts.index, y=counts.values, ax=ax1)
-    ax1.set_title("Ham vs Spam Counts")
-    ax1.set_xlabel("label")
-    ax1.set_ylabel("count")
+    """
+    Performs initial dataset exploration:
+    Creates a figure with two subplots side by side:
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+    Left subplot: bar chart of ham vs spam counts using sns.barplot:
+        - title: "Ham vs Spam Counts", xlabel: "label", ylabel: "count"
+    Right subplot: histogram of raw message lengths using sns.histplot:
+        - bins: 50
+        - title: "Histogram of Raw Message Lengths",
+          xlabel: "length", ylabel: "count"
 
-    # Right: histogram of raw message lengths
-    sns.histplot(lengths, bins=50, ax=ax2)
-    ax2.set_title("Histogram of Raw Message Lengths")
-    ax2.set_xlabel("length")
-    ax2.set_ylabel("count")
+    Args:
+        df: Dataset containing 'label' and 'message' columns.
+    Returns:
+        None
+    """
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
+
+    # Left subplot - bar chart of label distribution
+    label_data = df['label'].value_counts()
+    sns.barplot(x=label_data.index, y=label_data.values, ax=ax1)
+    ax1.set(title="Ham vs Spam Counts", xlabel="label", ylabel="count")
+
+    # Right subplot - histogram of message lengths
+    msg_lens = df['message'].str.len()
+    sns.histplot(msg_lens, bins=50, ax=ax2, stat='count', kde=False)
+    ax2.set(title="Histogram of Raw Message Lengths", xlabel="length",
+            ylabel="count")
 
     plt.tight_layout()
     plt.show()
+    
