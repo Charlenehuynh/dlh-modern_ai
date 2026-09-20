@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+""" Function that cleans and normalize SMS messages """
+
+
 import re
 import emoji
 
@@ -27,7 +30,8 @@ def normalize_unicode_punct(text):
 def clean_text(
     text, replace_num=True, replace_url=True, emoji_action="replace"
 ):
-    if text is None:
+    """ Return new_text that that is already cleaned"""
+    if not isinstance(text, str):
         return ""
     # 1. lowercase + strip
     new_text = text.lower().strip()
