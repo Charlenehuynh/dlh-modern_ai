@@ -21,6 +21,7 @@ EMOTICON_MAP = {
 
 
 def normalize_emoticons(tokens, emoticon_action="replace"):
+    """ function to normalize emoticons"""
     if not isinstance(tokens, list):
         return []
 
