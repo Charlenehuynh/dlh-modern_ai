@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
-""" Function that tokenizes a cleaned SMS message."""
+"""Function that tokenizes a cleaned SMS message."""
+
 import nltk
 
-
 EMOTICON_MAP = {
-    "<3":   "<EMO>", "</3": "<EMO>",
-    ":)":   "<EMO>", ":-)": "<EMO>",
-    ":(":   "<EMO>", ":-(": "<EMO>",
-    ":d":   "<EMO>", ";)":  "<EMO>",
-    ":|":   "<EMO>", ">:(": "<EMO>",
-    ":p":   "<EMO>", "b)":  "<EMO>",
-    "o:)":  "<EMO>",
+    "<3": "<EMO>",
+    "</3": "<EMO>",
+    ":)": "<EMO>",
+    ":-)": "<EMO>",
+    ":(": "<EMO>",
+    ":-(": "<EMO>",
+    ":d": "<EMO>",
+    ";)": "<EMO>",
+    ":|": "<EMO>",
+    ">:(": "<EMO>",
+    ":p": "<EMO>",
+    "b)": "<EMO>",
+    "o:)": "<EMO>",
 }
 
 
@@ -32,5 +38,18 @@ def normalize_emoticons(tokens, emoticon_action="replace"):
     return result
 
 
-def tokenize_text(text, method="tweet")
+def tokenize_text(text, method="tweet"):
     # CODE HERE
+    # Return an empty list if text is not a string
+    if not isinstance(text, str):
+        return []
+    if method == "tweet":
+        tk = nltk.tokenize.TweetTokenizer(reduce_len=True)
+        tk = tk.tokenize(text)
+    elif method == "word":
+        tk = nltk.word_tokenize(text)
+    elif method == "split":
+        tk = text.split()
+    else:
+        raise ValueError("Invalid tokenizer method")
+    return tk
