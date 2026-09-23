@@ -4,7 +4,9 @@
 import nltk
 
 
-def remove_stopwords(tokens, language="english", extra_words=None, keep_words=None):
+def remove_stopwords(
+    tokens, language="english", extra_words=None, keep_words=None
+):
     """
     Remove stop words
     """
@@ -16,5 +18,5 @@ def remove_stopwords(tokens, language="english", extra_words=None, keep_words=No
         set_words.update(extra_words)
     if keep_words is not None:
         set_words.difference_update(keep_words)
-    allowed = [i for i in tokens if i not in set_words]
+    allowed = [i for i in tokens if i.lower() not in set_words]
     return allowed
