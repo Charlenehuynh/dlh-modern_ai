@@ -39,7 +39,7 @@ def normalize_emoticons(tokens, emoticon_action="replace"):
 
 
 def tokenize_text(text, method="tweet"):
-    # CODE HERE
+    """that tokenizes a cleaned SMS message."""
     # Return an empty list if text is not a string
     if not isinstance(text, str):
         return []
