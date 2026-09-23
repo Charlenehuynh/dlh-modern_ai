@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
-"""Function that removes stopwords from a token list."""
+"""Function that removes stopwords a token list."""
+
 import nltk
+
 
 def remove_stopwords(tokens, language="english", extra_words=None, keep_words=None):
     """
@@ -9,7 +11,7 @@ def remove_stopwords(tokens, language="english", extra_words=None, keep_words=No
     language (str): NLTK stopword language to load. Defaults to "english".
     extra_words (set[str] | None): Additional words to add to the stopword set.
     keep_words (set[str] | None): Words to exclude from the stopword set
-    
+
     The function should:
     Return [] if tokens is not a list.
     Load the NLTK stopword list for the given language.
