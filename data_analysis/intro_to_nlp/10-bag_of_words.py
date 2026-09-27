@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Bag-of-Words feature extraction"""
-from sklearn.feature_extraction.text import CountVectorizer
+import sklearn
 
 
 def bag_of_words(corpus_tokens, max_features=5000, ngram_range=(1, 2),
@@ -8,7 +8,7 @@ def bag_of_words(corpus_tokens, max_features=5000, ngram_range=(1, 2),
     """Builds a Bag-of-Words feature matrix from a list of token lists."""
     docs = [" ".join(tokens) for tokens in corpus_tokens]
 
-    vectorizer = CountVectorizer(
+    vectorizer = sklearn.feature_extraction.text.CountVectorizer(
         tokenizer=str.split,
         lowercase=False,
         token_pattern=None,
