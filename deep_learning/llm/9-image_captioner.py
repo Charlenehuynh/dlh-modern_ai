@@ -18,7 +18,9 @@ def image_captioner(model, image_path, max_new_tokens):
         caption (str): generated textual description of the image
     """
     processor = transformers.BlipProcessor.from_pretrained(model)
-    blip_model = transformers.BlipForConditionalGeneration.from_pretrained(model)
+    blip_model = transformers.BlipForConditionalGeneration.from_pretrained(
+        model
+    )
 
     image = PIL.Image.open(image_path).convert("RGB")
     inputs = processor(images=image, return_tensors="pt")
