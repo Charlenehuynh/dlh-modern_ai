@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""function that loads a pre-trained RoBERTa tokenizer and tokenizes a given input sentence."""
+"""function that loads a pre-trained RoBERTa tokenizer."""
 
 import transformers
 
