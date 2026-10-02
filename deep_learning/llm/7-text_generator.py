@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """creates a high-level interface for performing text generation"""
 
+import transformers
+
 
 def create_text_generator(
     model_name,
