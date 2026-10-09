@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Module that loads the Emotion dataset from the Hugging Face Hub."""
-from datasets import load_dataset
+import datasets
 
 
 def load_emotion_dataset():
@@ -10,4 +10,4 @@ def load_emotion_dataset():
     Returns:
         DatasetDict containing the train, validation, and test splits.
     """
-    return load_dataset("dair-ai/emotion")
+    return datasets.load_dataset("dair-ai/emotion")
