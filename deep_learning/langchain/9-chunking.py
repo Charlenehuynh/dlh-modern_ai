@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Split LangChain documents into smaller chunks"""
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain import text_splitter
 
 
 def split_into_chunks(docs, chunk_size, chunk_overlap):
@@ -15,7 +15,7 @@ def split_into_chunks(docs, chunk_size, chunk_overlap):
     Returns:
         list: Document objects representing the split chunks
     """
-    splitter = RecursiveCharacterTextSplitter(
+    splitter = text_splitter.RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap
     )
