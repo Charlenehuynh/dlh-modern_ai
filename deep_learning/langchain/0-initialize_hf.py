@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
-
-#!/usr/bin/env python3
 """Initialize a Hugging Face text-to-text LLM with LangChain"""
-
-from langchain_huggingface import HuggingFacePipeline
+from langchain_community import llms
 
 
 def initialize_hf_llm(model_name, max_tokens):
@@ -17,7 +14,7 @@ def initialize_hf_llm(model_name, max_tokens):
     Returns:
         llm: an instance of HuggingFacePipeline
     """
-    llm = HuggingFacePipeline.from_model_id(
+    llm = llms.HuggingFacePipeline.from_model_id(
         model_id=model_name,
         task="text2text-generation",
         model_kwargs={"dtype": "auto"},
