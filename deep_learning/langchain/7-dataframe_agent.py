@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Create a LangChain agent that can analyze a pandas DataFrame"""
-from langchain_experimental.agents import agent_toolkits
+from langchain_experimental.agents.agent_toolkits import (
+    create_pandas_dataframe_agent
+)
 
 
 def create_dataframe_agent(llm, df):
@@ -14,7 +16,7 @@ def create_dataframe_agent(llm, df):
     Returns:
         AgentExecutor: an agent executor ready to handle queries
     """
-    return agent_toolkits.create_pandas_dataframe_agent(
+    return create_pandas_dataframe_agent(
         llm,
         df,
         verbose=True,
