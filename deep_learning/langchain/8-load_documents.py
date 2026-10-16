@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Load documents from a folder with LangChain"""
-from langchain_community.document_loaders import DirectoryLoader, TextLoader
+from langchain_community import document_loaders
 
 
 def load_documents(folder_path, file_pattern):
@@ -14,9 +14,9 @@ def load_documents(folder_path, file_pattern):
     Returns:
         list: LangChain Document objects loaded from the folder
     """
-    loader = DirectoryLoader(
+    loader = document_loaders.DirectoryLoader(
         folder_path,
         glob=file_pattern,
-        loader_cls=TextLoader
+        loader_cls=document_loaders.TextLoader
     )
     return loader.load()
