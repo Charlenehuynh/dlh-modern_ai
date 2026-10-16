@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Prepare a sequence of system and human messages for an LLM"""
-
-from langchain_core.messages import SystemMessage, HumanMessage
+from langchain_core import messages
 
 
 def setup_message_sequence(system_msg, human_msgs):
@@ -15,6 +14,6 @@ def setup_message_sequence(system_msg, human_msgs):
     Returns:
         list containing the SystemMessage followed by HumanMessage objects
     """
-    messages = [SystemMessage(content=system_msg)]
-    messages += [HumanMessage(content=msg) for msg in human_msgs]
-    return messages
+    sequence = [messages.SystemMessage(content=system_msg)]
+    sequence += [messages.HumanMessage(content=msg) for msg in human_msgs]
+    return sequence
