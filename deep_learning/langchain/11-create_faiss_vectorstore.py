@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Create a FAISS vector store and retriever with LangChain"""
-from langchain_community.vectorstores import FAISS
+from langchain_community import vectorstores
 
 
 def create_faiss_vectorstore(docs, embedding_model, k):
@@ -17,6 +17,6 @@ def create_faiss_vectorstore(docs, embedding_model, k):
             vectorstore: the FAISS vector store
             retriever: a VectorStoreRetriever returning the top k documents
     """
-    vectorstore = FAISS.from_documents(docs, embedding_model)
+    vectorstore = vectorstores.FAISS.from_documents(docs, embedding_model)
     retriever = vectorstore.as_retriever(search_kwargs={"k": k})
     return vectorstore, retriever
