@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Set up a LangChain agent executor with tools"""
-from langchain.agents import AgentExecutor, create_tool_calling_agent
-from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain import agents
+from langchain_community.agent_toolkits import load_tools
 
 
 def load_agent_with_toolkit(llm, toolkit_names, prompt):
@@ -16,6 +16,6 @@ def load_agent_with_toolkit(llm, toolkit_names, prompt):
     Returns:
         AgentExecutor: an agent executor ready to handle queries
     """
-    tools = load_tools(toolkit_names)
-    agent = create_tool_calling_agent(llm, tools, prompt)
-    return AgentExecutor(agent=agent, tools=tools, verbose=True)
+    tools = load_tools.load_tools(toolkit_names)
+    agent = agents.create_tool_calling_agent(llm, tools, prompt)
+    return agents.AgentExecutor(agent=agent, tools=tools, verbose=True)
