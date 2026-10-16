@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Reusable prompt template"""
-from langchain_core.prompts import PromptTemplate
+"""Create a LangChain PromptTemplate"""
+from langchain import prompts
 
 
 def create_prompt_template(template_str, input_variables):
@@ -9,7 +9,7 @@ def create_prompt_template(template_str, input_variables):
     template_str: prompt text with {placeholders}
     input_variables: list of the placeholder names used in template_str
     """
-    return PromptTemplate(
+    return prompts.PromptTemplate(
         template=template_str,
         input_variables=input_variables
     )
